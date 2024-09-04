@@ -1,16 +1,21 @@
 #include <stdio.h>
 #include <stdlib.h>
 #define Size 80
-typedef struct{
+typedef struct MyArray{
     int *data; // 使用数组指针，指向一个名为data的长度不定的数组
     int length;// 记录当前数组的长度
+    int size; // 给数组分配的最大存储容量
 }intArr;
-intArr myArr;
-int arr[Size];
 
-intArr initArr(intArr myArr){
+intArr initArr(){
+    intArr myArr;
+    /*
+    int arr[Size];
     myArr.data = arr;
+    */
+    myArr.data = (int *)malloc(Size*sizeof(int));// 动态申请存储空间
     myArr.length = 0; // 数组长度初始化为0
+    myArr.size = Size; // 数组存储空间初始化为Size
     return myArr;
 }
 
@@ -21,10 +26,9 @@ void printArr(intArr myArr){
     }
     printf("\n");
 }
-
 // 从数组末端插入元素elem
 intArr addLast(intArr myArr,int elem){
-    if(myArr.length==Size){
+    if(myArr.length==myArr.size){
         printf("数组空间已满，无法插入新元素!\n");
         return myArr;
     }
@@ -38,7 +42,7 @@ intArr addbyIndex(intArr myArr, int elem, int index){
         printf("插入位置有问题!\n");
         return myArr;
     }
-    if(myArr.length==Size){
+    if(myArr.length==myArr.size){
         printf("数组空间已满，无法插入新元素!\n");
         return myArr;
     }
@@ -131,12 +135,12 @@ int getElembyIndex(intArr myArr, int index){
     }
     return myArr.data[index];
 }
-
 int main(void){
     
-    myArr = initArr(myArr);
+    intArr myArr = initArr();
     // 向动态数组中添加元素
     for(int i=0;i<10;i++){
+    //for(int i=0;i<Size-10;i++){
         myArr.data[i] = i;
         myArr.length++;
     }
