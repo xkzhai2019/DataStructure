@@ -17,7 +17,6 @@ void Swap(char *a,char *b){
     *b = tmp;
 }
 
-
 int main(void){
     //int a,b;
     //float a,b;
