@@ -1,33 +1,115 @@
 #include <iostream>
+using namespace std;
 #define Size 10
 struct intArr{
     private:
         int *data; // 使用数组指针，指向一个名为data的长度不定的数组
         int length;// 记录当前数组的长度
         int size; // 给数组分配的最大存储容量
+        void resize(int newSize); // 扩容函数
     public:
-        int getLength(){
-            return length;
-        }
-        int getSize(){
-            return size;
-        }
-        void print(){
-            cout<<"当前动态数组的最大容量为"<<size<<"现有元素为："<<endl;
-            for(int i=0;i<length;i++){
-                cout<<data[i]<<" ";   
-            }
-            cout<<endl;
-        }
+        //带参构造函数
+        intArr(int size);
+        // 无参构造函数
+        intArr();
+
+        int getLength();
+        int getSize();
+        void print();
+        void addLast(int elem);
+        void addbyIndex(int index,int elem);
+        void addFirst(int elem);
+        int removeLast();
+        int removebyIndex(int index);
+        int removeFirst();
+        
 };
 
-
-intArr initArr(){
-    myArr.data = (int *)malloc(Size*sizeof(int));// 动态申请存储空间
-    myArr.length = 0; // 数组长度初始化为0
-    myArr.size = Size; // 数组存储空间初始化为Size
-    return myArr;
+intArr::intArr(){
+    data = new int[Size];
+    length = 0;
+    size = Size;
 }
+intArr::intArr(int size){
+    data = new int[size];
+    length = 0;
+    this->size = size;
+}
+void intArr::print(){
+    cout<<"当前动态数组的最大容量为"<<size<<"，现有元素为："<<endl;
+    for(int i=0;i<length;i++){
+        cout<<data[i]<<" ";   
+    }
+    cout<<endl;
+}
+int intArr::getSize(){
+    return size;
+}
+int intArr::getLength(){
+    return length;
+}
+
+void intArr::resize(int newSize){
+    int *newData = new int[newSize];
+    for(int i=0;i<length;i++){
+        newData[i] = data[i];
+    }
+    data = newData;
+}
+void intArr::addLast(int elem){
+    if(length==size){// 数组已满
+        /*
+        size = 2*size;
+        int *newData = new int[size];
+        for(int i=0;i<length;i++){
+            newData[i] = data[i];
+        }
+        data = newData;
+        */
+        size = 2 * size;
+        resize(size);
+    }
+    data[length] = elem;
+    length++;
+}
+void intArr::addbyIndex(int index,int elem){
+    if(length==size){
+        size = 2*size;
+        resize(size);
+    }
+    if(index<0 || index>length){
+        cout<<"插入位置不合法！\n";
+        return;
+    }
+    for(int i=length-1;i>=index;i--){
+        data[i+1] = data[i];
+    }
+    data[index] = elem;
+    length++;
+}
+void intArr::addFirst(int elem){
+    addbyIndex(0,elem);
+}
+
+int intArr::removeLast(){
+    
+}
+
+int main(void){
+    //intArr myArr; // 创建对象
+    //myArr.print();
+    intArr myArr(5);
+    myArr.print();
+    for(int i=0;i<40;i++){
+        if(i%2==0)
+            myArr.addLast(i);
+        else
+            myArr.addFirst(i);
+        myArr.print();
+    }
+}
+
+/*
 
 void printArr(intArr myArr){
     printf("当前动态数组最大容量为%d,现有元素为：\n",myArr.size);
@@ -201,3 +283,4 @@ int main(void){
     printArr(myArr);
     return 0;
 }
+*/

@@ -6,6 +6,9 @@ struct Student{
         int age;
         float score;
     public:
+        Student(){
+        };
+        Student(char *name,int age,float score);
         void say();//在类内部对成员函数做声明
         void setAge(int age);
         void setName(char *name);
@@ -14,6 +17,11 @@ struct Student{
         float getScore();
         char *getName();
 };
+Student::Student(char *name, int age, float score){
+    this->name = name;
+    this->age = age;
+    this->score = score;
+}
 void Student::say(){ //在类外部对成员函数进行定义
     cout<<"我的名字是"<<name<<endl;
     cout<<"我今年"<<age<<"岁"<<endl;
@@ -50,5 +58,8 @@ int main(void){
     cout<<"Age: "<<stu1.getAge()<<endl;
     cout<<"Score: "<<stu1.getScore()<<endl;
 
+    //Student stu2("小红",20,588); // 创建对象时，向构造函数传参
+    Student *stu2 = new Student("小红",20,588); // 使用new来动态分配内存
+    (*stu2).say();
     return 0;
 }

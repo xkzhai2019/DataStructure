@@ -28,9 +28,12 @@ intArr addLast(intArr myArr,int elem){
         //printf("数组空间已满，无法插入新元素!\n");
         //return myArr;
         myArr.size *= 2;
-        //int newData[myArr.size];
-        //myArr.data = newData;
-        myArr.data = (int *)realloc(myArr.data,myArr.size*sizeof(int));
+        int newData[myArr.size];
+        for(int i=0;i<myArr.length;i++){
+            newData[i] = myArr.data[i];
+        }
+        myArr.data = newData;
+//        myArr.data = (int *)realloc(myArr.data,myArr.size*sizeof(int));
     }
     myArr.data[myArr.length] = elem;
     myArr.length++;
@@ -160,6 +163,37 @@ int main(void){
     printf("末尾插入20：\n");
     myArr = addLast(myArr,20);
     printArr(myArr);
+    printf("末尾插入20：\n");
+    myArr = addLast(myArr,20);
+    printArr(myArr);
+    printf("末尾插入20：\n");
+    myArr = addLast(myArr,20);
+    printArr(myArr);
+    printf("末尾插入20：\n");
+    myArr = addLast(myArr,20);
+    printArr(myArr);
+    printf("末尾插入20：\n");
+    myArr = addLast(myArr,20);
+    printArr(myArr);
+    printf("末尾插入20：\n");
+    myArr = addLast(myArr,20);
+    printArr(myArr);
+    printf("末尾插入20：\n");
+    myArr = addLast(myArr,20);
+    printArr(myArr);
+    printf("末尾插入20：\n");
+    myArr = addLast(myArr,20);
+    printArr(myArr);
+    printf("末尾插入20：\n");
+    myArr = addLast(myArr,20);
+    printArr(myArr);
+    printf("末尾插入20：\n");
+    myArr = addLast(myArr,20);
+    printArr(myArr);
+    printf("末尾插入20：\n");
+    myArr = addLast(myArr,20);
+    printArr(myArr);
+    /*
     printf("在索引-1处插入20: \n");
     myArr = addbyIndex(myArr,20,-1);
     printArr(myArr);
@@ -187,5 +221,6 @@ int main(void){
     printf("删除元素2:\n");
     myArr = removeEle(myArr,2);
     printArr(myArr);
+    */
     return 0;
 }
