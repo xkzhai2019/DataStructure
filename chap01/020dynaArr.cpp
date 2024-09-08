@@ -92,7 +92,13 @@ void intArr::addFirst(int elem){
 }
 
 int intArr::removeLast(){
-    
+    if(length==0){
+        cout<<"当前数组为空，不可删除！"<<endl;
+        exit(0);
+    }
+    int ret = data[length-1];
+    length--;
+
 }
 
 int main(void){
