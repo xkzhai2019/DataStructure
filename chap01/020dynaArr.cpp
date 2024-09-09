@@ -181,7 +181,7 @@ int main(void){
     }
     myArr.print();
 }
-
+/*
 // 从数组末端插入元素elem
 intArr addLast(intArr myArr,int elem){
     if(myArr.length==myArr.size){
