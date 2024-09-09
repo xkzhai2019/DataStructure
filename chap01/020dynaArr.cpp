@@ -1,4 +1,6 @@
 #include <iostream>
+//#include <cassert>
+//#include <cstdlib>
 using namespace std;
 #define Size 10
 struct intArr{
@@ -8,21 +10,23 @@ struct intArr{
         int size; // 给数组分配的最大存储容量
         void resize(int newSize); // 扩容函数
     public:
+        int getLength();
+        int getSize();
+        int getData(int index) throw(const char *);
+        bool setData(int index,int elem);//返回值代表是否修改成功
+        void print();
+        
         //带参构造函数
         intArr(int size);
         // 无参构造函数
         intArr();
-
-        int getLength();
-        int getSize();
-        void print();
         void addLast(int elem);
         void addbyIndex(int index,int elem);
         void addFirst(int elem);
         int removeLast();
         int removebyIndex(int index);
         int removeFirst();
-        
+                
 };
 
 intArr::intArr(){
@@ -47,6 +51,30 @@ int intArr::getSize(){
 }
 int intArr::getLength(){
     return length;
+}
+int intArr::getData(int index) throw(const char*){
+    /*
+    if(index<0 || index>=length){
+        cout<<"索引非法，无法获取元素"<<endl;
+        exit(0); //会直接终止程序
+    }
+    */
+    // 断言,同样会终止程序
+    //assert(index>=0);
+    //assert(index<length);
+    if(index<0 || index>=length){
+        throw "illegal index error";
+    }
+    return data[index];
+}
+bool intArr::setData(int index,int elem){
+    if(index<0 || index>=length){
+        cout<<"索引不合法，无法修改"<<endl;
+        return false;
+    }
+    data[index] = elem;
+    cout<<"修改成功"<<endl;
+    return true;
 }
 
 void intArr::resize(int newSize){
@@ -92,13 +120,19 @@ void intArr::addFirst(int elem){
 }
 
 int intArr::removeLast(){
+    /*
     if(length==0){
         cout<<"当前数组为空，不可删除！"<<endl;
-        exit(0);
     }
+    */
+//    assert(length>0);
+    if(length==0){
+        throw "EmptyArr Error";
+    }
+
     int ret = data[length-1];
     length--;
-
+    return ret;
 }
 
 int main(void){
@@ -106,6 +140,13 @@ int main(void){
     //myArr.print();
     intArr myArr(5);
     myArr.print();
+    cout<<"尝试删除最后一个元素:"<<endl;
+    try{
+        int ret = myArr.removeLast();
+        cout<<"最后一个元素为"<<ret<<endl;
+    }catch(const char* msg){
+        cout<<msg<<endl;
+    }
     for(int i=0;i<40;i++){
         if(i%2==0)
             myArr.addLast(i);
@@ -113,17 +154,34 @@ int main(void){
             myArr.addFirst(i);
         myArr.print();
     }
-}
-
-/*
-
-void printArr(intArr myArr){
-    printf("当前动态数组最大容量为%d,现有元素为：\n",myArr.size);
-    for(int i=0;i<myArr.length;i++){
-        printf("%d ",myArr.data[i]);
+    try{
+        cout<<"获取-1处元素："<<endl;
+        cout<<myArr.getData(-1)<<endl;
+    }catch(const char* msg){
+        cout<<msg<<endl;
     }
-    printf("\n");
+    try{
+        cout<<"获取1处元素："<<endl;
+        cout<<myArr.getData(1)<<endl; 
+    
+    }catch(const char* msg){
+        cout<<msg<<endl;
+    }
+    cout<<"修改-1处元素为20："<<endl;
+    myArr.setData(-1,20);
+    cout<<"修改1处元素为20："<<endl;
+    myArr.setData(1,20);
+
+    cout<<"尝试删除最后一个元素:"<<endl;
+    try{
+        int ret = myArr.removeLast();
+        cout<<"最后一个元素为"<<ret<<endl;
+    }catch(const char* msg){
+        cout<<msg<<endl;
+    }
+    myArr.print();
 }
+
 // 从数组末端插入元素elem
 intArr addLast(intArr myArr,int elem){
     if(myArr.length==myArr.size){

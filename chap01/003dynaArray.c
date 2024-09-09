@@ -185,5 +185,6 @@ int main(void){
     printf("数组中是否存在元素200: %d\n",contains(myArr,200));
     printf("索引100处的元素是: \n");
     printf("%d\n",getElembyIndex(myArr,100));
+//    printf("%d\n",getElembyIndex(myArr,1));
     return 0;
 }
