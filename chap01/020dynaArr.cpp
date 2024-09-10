@@ -12,7 +12,8 @@ struct intArr{
     public:
         int getLength();
         int getSize();
-        int getData(int index) throw(const char *);
+        // int getData(int index) throw(const char *); //C++98/C++03
+        int getData(int index) noexcept(false); // C++11及以上
         bool setData(int index,int elem);//返回值代表是否修改成功
         void print();
         
@@ -25,8 +26,7 @@ struct intArr{
         void addFirst(int elem);
         int removeLast();
         int removebyIndex(int index);
-        int removeFirst();
-                
+        int removeFirst();                
 };
 
 intArr::intArr(){
@@ -52,7 +52,8 @@ int intArr::getSize(){
 int intArr::getLength(){
     return length;
 }
-int intArr::getData(int index) throw(const char*){
+//int intArr::getData(int index) throw(const char*){
+int intArr::getData(int index) noexcept(false){
     /*
     if(index<0 || index>=length){
         cout<<"索引非法，无法获取元素"<<endl;
