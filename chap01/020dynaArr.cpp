@@ -192,7 +192,7 @@ bool intArr::contains(int elem){
         if(elem==data[i])
             return true;
     }
-    return flase;
+    return false;
 }
 
 int main(void){
