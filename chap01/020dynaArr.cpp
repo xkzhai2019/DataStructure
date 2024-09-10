@@ -27,6 +27,8 @@ struct intArr{
         int removeLast() noexcept(false); // 一般删除时，要返回删除的值，因此有可能抛异常
         int removebyIndex(int index) noexcept(false);
         int removeFirst() noexcept(false);                
+        int findElem(int elem); // 查找元素，返回下标
+        bool contains(int elem); // 判断数组中是否有该元素
 };
 
 intArr::intArr(){
@@ -144,7 +146,7 @@ int intArr::removeLast() noexcept(false){
 
 int intArr::removebyIndex(int index) noexcept(false){
     if(index<0 || index>=length){
-        cout<<"索引非法，不可删除";
+        cout<<"索引非法，不可删除:";
         throw "illegal index error";
     }
     int ret = data[index];
@@ -172,14 +174,34 @@ int intArr::removeFirst(){
         return ret;
 }
 */
+int intArr::findElem(int elem){
+    if(length==0){
+        return -1;
+    }
+    for(int i=0;i<length;i++){
+        if(elem==data[i])
+            return i;
+    }
+    return -1;
+}
+bool intArr::contains(int elem){
+    if(length==0){
+        return false;
+    }
+    for(int i=0;i<length;i++){
+        if(elem==data[i])
+            return true;
+    }
+    return flase;
+}
 
 int main(void){
     //intArr myArr; // 创建对象
     //myArr.print();
     intArr myArr(5);
     myArr.print();
-    cout<<"尝试删除最后一个元素:"<<endl;
     try{
+        cout<<"尝试删除空数组最后一个元素:"<<endl;
         int ret = myArr.removeLast();
         cout<<"最后一个元素为"<<ret<<endl;
     }catch(const char* msg){
@@ -210,135 +232,32 @@ int main(void){
     cout<<"修改1处元素为20："<<endl;
     myArr.setData(1,20);
 
-    cout<<"尝试删除最后一个元素:"<<endl;
     try{
+        cout<<"尝试删除最后一个元素:"<<endl;
         int ret = myArr.removeLast();
         cout<<"最后一个元素为"<<ret<<endl;
     }catch(const char* msg){
         cout<<msg<<endl;
     }
     myArr.print();
-}
-/*
-<<<<<<< HEAD
-=======
+    try{
+        cout<<"尝试删除-1处元素:"<<endl;
+        int ret = myArr.removebyIndex(-1);
+        cout<<"-1处元素为"<<ret<<endl;
+    }catch(const char* msg){
+        cout<<msg<<endl;
+    }
+    myArr.print();
+    try{
+        cout<<"尝试删除头部元素:"<<endl;
+        int ret = myArr.removeFirst();
+        cout<<"头部元素为"<<ret<<endl;
+    }catch(const char* msg){
+        cout<<msg<<endl;
+    }
+    myArr.print();
 
->>>>>>> tmp
-// 查找元素，返回元素所在下标
-int findEle(intArr myArr, int ele){
-    for(int i=0;i<myArr.length;i++){
-        if(myArr.data[i]==ele){
-            return i;
-        }
-    }
-    return -1;
-}
-// 删除指定位置的元素
-intArr removebyIndex(intArr myArr, int index){
-    if(myArr.length==0){
-        printf("数组为空，无法删除!\n");
-        return myArr;
-    }
-    if(index<0 || index>=myArr.length){
-        printf("元素位置不合法，无法删除!\n");
-        return myArr;
-    }
-    for(int i=index;i<myArr.length-1;i++){
-        myArr.data[i] = myArr.data[i+1];
-    }
-    myArr.length--;
-    if(myArr.length<=myArr.size/2){
-        myArr.size /= 2;
-        myArr.data = (int *)realloc(myArr.data,myArr.size*sizeof(int));
-    }
-    return myArr;
-}
-// 删除指定元素
-intArr removeEle(intArr myArr, int ele){
-    int index = findEle(myArr,ele);
-    if(index==-1){
-        printf("数组不存在该元素，无法删除！\n");
-        return myArr;
-    }
-    return removebyIndex(myArr, index);
-}
-// 删除数组头部元素
-intArr removeFirst(intArr myArr){
-    if(myArr.length==0){
-        printf("数组为空，无法删除!\n");
-        return myArr;
-    }
-    int ele = myArr.data[0];
-    return removeEle(myArr,ele);
-}
-// 修改数组中指定位置的元素
-intArr updateEle(intArr myArr, int index, int elem){
-    if(index<0 || index>=myArr.length){
-        printf("指定位置不合规!\n");
-        return myArr;
-    }
-    myArr.data[index] = elem;
-    return myArr;
-}
-// 判断某元素是否在数组中
-int contains(intArr myArr, int elem){
-    int index = findEle(myArr, elem);
-    if(index==-1){
-        return 0;
-    }
-    return 1;
-}
+    cout<<"查找100在数组中的位置："<<myArr.findElem(100)<<endl;
+    cout<<"数组中是否包含元素10："<<myArr.contains(10)<<endl;
 
-// 获取某指定位置的元素值
-int getElembyIndex(intArr myArr, int index){
-    if(index<0 || index>=myArr.length){
-        printf("指定位置不合规!\n");
-        exit(0);
-    }
-    return myArr.data[index];
 }
-int main(void){
-    
-    intArr myArr = initArr();
-    // 向动态数组中添加元素
-    for(int i=0;i<10;i++){
-    //for(int i=0;i<Size-10;i++){
-        myArr.data[i] = i;
-        myArr.length++;
-    }
-    printArr(myArr);
-    // 插入元素测试
-    printf("=====插入元素测试=======\n");
-    printf("末尾插入20：\n");
-    myArr = addLast(myArr,20);
-    printArr(myArr);
-    printf("在索引-1处插入20: \n");
-    myArr = addbyIndex(myArr,20,-1);
-    printArr(myArr);
-    printf("在索引1处插入20：\n");
-    myArr = addbyIndex(myArr,20,1);
-    printArr(myArr);
-    printf("在索引length+1处插入20：\n");
-    myArr = addbyIndex(myArr,20,myArr.length+1);
-    printArr(myArr);
-    printf("开头插入20：\n");
-    myArr = addFirst(myArr,20);
-    printArr(myArr);
-    // 删除元素测试
-    printf("=====删除元素测试=======\n");
-    printf("删除最后两个元素:\n");
-    myArr = removeLast(myArr);
-    myArr = removeLast(myArr);
-    printArr(myArr);
-    printf("删除开头元素:\n");
-    myArr = removeFirst(myArr);
-    printArr(myArr);
-    printf("开头插入元素:\n");
-    myArr = addFirst(myArr,200);
-    printArr(myArr);
-    printf("删除元素2:\n");
-    myArr = removeEle(myArr,2);
-    printArr(myArr);
-    return 0;
-}
-*/
