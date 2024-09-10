@@ -24,9 +24,9 @@ struct intArr{
         void addLast(int elem);
         void addbyIndex(int index,int elem);
         void addFirst(int elem);
-        int removeLast() noexcept(false); // 一般删除时，要返回删除的值，因此有可能抛异常
-        int removebyIndex(int index) noexcept(false);
-        int removeFirst() noexcept(false);                
+        int removeLast();
+        int removebyIndex(int index);
+        int removeFirst();                
 };
 
 intArr::intArr(){
@@ -64,7 +64,6 @@ int intArr::getData(int index) noexcept(false){
     //assert(index>=0);
     //assert(index<length);
     if(index<0 || index>=length){
-        cout<<"索引非法，无法获取值：";
         throw "illegal index error";
     }
     return data[index];
@@ -121,57 +120,21 @@ void intArr::addFirst(int elem){
     addbyIndex(0,elem);
 }
 
-int intArr::removeLast() noexcept(false){
+int intArr::removeLast(){
     /*
     if(length==0){
         cout<<"当前数组为空，不可删除！"<<endl;
-        exit(0);
     }
     */
-    //    assert(length>0);
+//    assert(length>0);
     if(length==0){
-        cout<<"当前数组为空，不可删除：";
         throw "EmptyArr Error";
     }
+
     int ret = data[length-1];
     length--;
-    if(length <= size/4){
-        size = size/2;
-        resize(size);
-    }
     return ret;
 }
-
-int intArr::removebyIndex(int index) noexcept(false){
-    if(index<0 || index>=length){
-        cout<<"索引非法，不可删除";
-        throw "illegal index error";
-    }
-    int ret = data[index];
-    for(int i=index;i<length-1;i++){
-        data[i] = data[i+1];
-    }
-    length--;
-    if(length <= size/4){
-        size = size/2;
-        resize(size);
-    }
-    return ret;
-}
-
-int intArr::removeFirst() noexcept(false){
-        return removebyIndex(0);
-}
-/*
-int intArr::removeFirst(){
-        try{
-            int ret = removebyIndex(0);
-        }catch(const char *msg){
-            cout<<msg<<endl;
-        }
-        return ret;
-}
-*/
 
 int main(void){
     //intArr myArr; // 创建对象
@@ -220,10 +183,7 @@ int main(void){
     myArr.print();
 }
 /*
-<<<<<<< HEAD
-=======
 
->>>>>>> tmp
 // 查找元素，返回元素所在下标
 int findEle(intArr myArr, int ele){
     for(int i=0;i<myArr.length;i++){
@@ -232,6 +192,19 @@ int findEle(intArr myArr, int ele){
         }
     }
     return -1;
+}
+// 删除末尾元素
+intArr removeLast(intArr myArr){
+    if(myArr.length==0){
+        printf("数组为空，无法删除!\n");
+        return myArr;
+    }
+    myArr.length--;
+    if(myArr.length<=myArr.size/2){
+        myArr.size /= 2;
+        myArr.data = (int *)realloc(myArr.data,myArr.size*sizeof(int));
+    }
+    return myArr;
 }
 // 删除指定位置的元素
 intArr removebyIndex(intArr myArr, int index){
