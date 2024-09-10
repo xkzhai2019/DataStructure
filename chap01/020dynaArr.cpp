@@ -183,41 +183,7 @@ int main(void){
     myArr.print();
 }
 /*
-// 从数组末端插入元素elem
-intArr addLast(intArr myArr,int elem){
-    if(myArr.length==myArr.size){
-        //printf("数组空间已满，无法插入新元素!\n");
-        //return myArr;
-        myArr.size *= 2;
-        myArr.data = (int *)realloc(myArr.data,myArr.size*sizeof(int));
-    }
-    myArr.data[myArr.length] = elem;
-    myArr.length++;
-    return myArr;
-}
-// 在数组index处插入elem
-intArr addbyIndex(intArr myArr, int elem, int index){
-    if(index>=myArr.length+1 || index< 0){
-        printf("插入位置有问题!\n");
-        return myArr;
-    }
-    if(myArr.length==myArr.size){
-        //printf("数组空间已满，无法插入新元素!\n");
-        //return myArr;
-        myArr.size *= 2;
-        myArr.data = (int *)realloc(myArr.data,myArr.size*sizeof(int));
-    }
-    for(int i=myArr.length;i>index;i--){
-        myArr.data[i] = myArr.data[i-1];
-    }
-    myArr.data[index] = elem;
-    myArr.length++;
-    return myArr;
-}
-// 在数组头部插入elem
-intArr addFirst(intArr myArr,int elem){
-    return addbyIndex(myArr,elem,0);
-}
+
 // 查找元素，返回元素所在下标
 int findEle(intArr myArr, int ele){
     for(int i=0;i<myArr.length;i++){
