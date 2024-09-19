@@ -55,7 +55,7 @@ int main(void){
     myStack.print();
 
     ArrayStack<char> charStack;
-    string s = "{[]}[]())";
+    string s = "{}{}{}{}{}{(([[]]))]";
     //string s = "{[]}[]()";
     cout<<s.length()<<endl;
     cout<<s[1]<<endl;
