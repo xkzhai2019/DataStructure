@@ -1,6 +1,6 @@
 #include <iostream>
 using namespace std;
-#define Size 10
+
 template<class T> // 模版头
 class TArr{
     private:
@@ -12,6 +12,7 @@ class TArr{
         int getLength();
         int getSize();
         T getData(int index) noexcept(false); // C++11及以上
+        T getLast() noexcept(false); // C++11及以上
         bool setData(int index,T elem);//返回值代表是否修改成功
         void print();
         
@@ -27,13 +28,19 @@ class TArr{
         T removeFirst() noexcept(false);                
         int findElem(T elem); // 查找元素，返回下标
         bool contains(T elem); // 判断数组中是否有该元素
+        bool isEmpty(); // 判断数组是否为空
 };
 
 template<class T>// 模版头
-TArr<T>::TArr(){
-    data = new T[Size];
+bool TArr<T>::isEmpty(){
+    return length==0;
+}
+
+template<class T>// 模版头
+TArr<T>::TArr(){ // 无参构造默认申请容量为10的空间
+    data = new T[10];
     length = 0;
-    size = Size;
+    size = 10;
 }
 template<class T>// 模版头
 TArr<T>::TArr(int size){
@@ -43,11 +50,9 @@ TArr<T>::TArr(int size){
 }
 template<class T>// 模版头
 void TArr<T>::print(){
-    cout<<"当前动态数组的最大容量为"<<size<<"，现有元素为："<<endl;
     for(int i=0;i<length;i++){
         cout<<data[i]<<" ";   
     }
-    cout<<endl;
 }
 template<class T>// 模版头
 int TArr<T>::getSize(){
@@ -65,6 +70,12 @@ T TArr<T>::getData(int index) noexcept(false){
     }
     return data[index];
 }
+
+template<class T>// 模版头
+T TArr<T>::getLast() noexcept(false){
+    return getData(length-1);
+}
+
 template<class T>// 模版头
 bool TArr<T>::setData(int index,T elem){
     if(index<0 || index>=length){
@@ -174,67 +185,3 @@ bool TArr<T>::contains(T elem){
     return false;
 }
 
-int main(void){
-    TArr<float> myArr(5);
-    myArr.print();
-    try{
-        cout<<"尝试删除空数组最后一个元素:"<<endl;
-        float ret = myArr.removeLast();
-        cout<<"最后一个元素为"<<ret<<endl;
-    }catch(const char* msg){
-        cout<<msg<<endl;
-    }
-    for(int i=0;i<40;i++){
-        if(i%2==0)
-            myArr.addLast(i+0.1);
-        else
-            myArr.addFirst(i+0.1);
-        myArr.print();
-    }
-    try{
-        cout<<"获取-1处元素："<<endl;
-        cout<<myArr.getData(-1)<<endl;
-    }catch(const char* msg){
-        cout<<msg<<endl;
-    }
-    try{
-        cout<<"获取1处元素："<<endl;
-        cout<<myArr.getData(1)<<endl; 
-    
-    }catch(const char* msg){
-        cout<<msg<<endl;
-    }
-    cout<<"修改-1处元素为20.24："<<endl;
-    myArr.setData(-1,20.24);
-    cout<<"修改1处元素为20.24："<<endl;
-    myArr.setData(1,20.24);
-
-    try{
-        cout<<"尝试删除最后一个元素:"<<endl;
-        float ret = myArr.removeLast();
-        cout<<"最后一个元素为"<<ret<<endl;
-    }catch(const char* msg){
-        cout<<msg<<endl;
-    }
-    myArr.print();
-    try{
-        cout<<"尝试删除-1处元素:"<<endl;
-        float ret = myArr.removebyIndex(-1);
-        cout<<"-1处元素为"<<ret<<endl;
-    }catch(const char* msg){
-        cout<<msg<<endl;
-    }
-    myArr.print();
-    try{
-        cout<<"尝试删除头部元素:"<<endl;
-        float ret = myArr.removeFirst();
-        cout<<"头部元素为"<<ret<<endl;
-    }catch(const char* msg){
-        cout<<msg<<endl;
-    }
-    myArr.print();
-
-    cout<<"查找100在数组中的位置："<<myArr.findElem(100.24)<<endl;
-    cout<<"数组中是否包含元素10："<<myArr.contains(20.24)<<endl;
-
-}
