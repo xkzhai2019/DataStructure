@@ -54,5 +54,41 @@ int main(void){
     std::cout<<myStack.pop()<<std::endl;
     myStack.print();
 
+    ArrayStack<char> charStack;
+    string s = "{[]}[]())";
+    //string s = "{[]}[]()";
+    cout<<s.length()<<endl;
+    cout<<s[1]<<endl;
+    bool flag = true;
+    for(int i=0;i<s.length();i++){
+        if(s[i]=='(' || s[i]=='{' || s[i]=='['){
+            charStack.push(s[i]);
+        }else{
+            if(charStack.isEmpty()){
+                flag = false;
+                break;
+            }
+            char tc = charStack.pop();
+            if(tc=='(' && s[i]!=')'){
+                flag = false;
+                break;
+            }
+            if(tc=='{' && s[i]!='}'){
+                flag = false;
+                break;
+            }
+            if(tc=='[' && s[i]!=']'){
+                flag = false;
+                break;
+            }
+        }
+    }
+    if(charStack.isEmpty()==false){
+        flag = false;
+    }
+    if(flag) 
+        cout<<"合法字符串"<<endl;
+    else
+        cout<<"非法字符串"<<endl;
     return 0;
 }
