@@ -233,7 +233,7 @@ int main(void){
         cout<<msg<<endl;
     }
     myArr.print();
-
+//    myArr.addbyIndex(-1,10.0);//测试return是否会直接结束程序
     cout<<"查找100在数组中的位置："<<myArr.findElem(100.24)<<endl;
     cout<<"数组中是否包含元素10："<<myArr.contains(20.24)<<endl;
 

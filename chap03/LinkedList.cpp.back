@@ -1,0 +1,82 @@
+#include <iostream>
+
+template<typename T>
+class Node{
+//    private:
+    public:
+        T e;
+        Node<T> *next;
+    public:
+        Node(T e, Node<T> *next){
+            this->e = e;
+            this->next = next;
+        }
+        Node(T e){
+            this->e =e;
+            //next = NULL;
+            next = nullptr;
+        }
+};
+
+template<typename T>
+class LinkedList{
+    private:
+        Node<T> *head; //指向首个节点的指针
+        int length; // 存储当前链表中总共有多少节点
+    public:
+        LinkedList(){
+            head = nullptr; // 初始化链表时，没有首个节点，节点个数为0
+            length = 0;
+        }
+        int getLength(){
+            return length;
+        }
+        bool isEmpty(){
+            return length==0;
+        }
+        void addFirst(T e){
+            Node<T> *node = new Node<T>(e);
+            node->next = head;
+            head = node;
+            
+            // head = new Node<T>(e,head);
+            
+            /*
+            Node<T> node(e);
+            node.next = head;
+            head = &node;
+            */
+            length++;
+        }
+        void add(int index,T e){
+            if(index<0 || index>length){
+                std::cout<<"索引越界，无法添加"<<endl;
+                return;
+            }
+            //由于首节点不存在前一节点，所以单独处理索引为0的情况
+            if(index==0){
+                addFirst(e);
+                return;
+            }
+
+            Node<T> *prev = head;
+            for(int i=0;i<index-1;i++){
+                prev = prev->next;
+            }
+            /*
+            Node<T> *node = new Node<T>(e);
+            node->next = = prev->next;
+            prev->next = node;
+            */
+            prev->next = new Node<T>(e,prev->next);
+            length++;
+        }
+        void addLast(T e){
+            add(length,e);
+        }
+
+};
+
+int main(){
+    return 0;
+}
