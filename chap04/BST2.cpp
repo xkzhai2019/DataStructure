@@ -1,4 +1,5 @@
 #include <iostream>
+#include <stack>
 
 template<typename T>
 class Node{
@@ -85,6 +86,22 @@ public:
         preOrder(node->left);
         preOrder(node->right);
     }
+    // 前序遍历--非递归实现
+    void preOrderNR(){
+        std::stack<Node<T> *> stackTree;
+        stackTree.push(root);
+        while(!stackTree.empty()){
+            Node<T>* cur = stackTree.pop();
+            std::cout<<cur->e<<" ";
+            if(cur->right!=nullptr){
+                stackTree.push(cur->right);
+            }
+            if(cur->left!=nullptr){
+                stackTree.push(cur->left);
+            }
+        }
+        std::cout<<std::endl;
+    }
 
     void inOrder(){
         inOrder(root);
@@ -103,8 +120,8 @@ public:
     // 后序访问以node为根节点的二分搜索树
     void postOrder(Node<T> *node){
         if(node==nullptr) return;
-        inOrder(node->left);
-        inOrder(node->right);
+        postOrder(node->left);
+        postOrder(node->right);
         std::cout<<node->e<<" ";
     }
     
@@ -126,6 +143,7 @@ int main(){
     std::cout<<"前序遍历：";
     bst.preOrder();
     std::cout<<std::endl;
+    bst.preOrderNR();
     std::cout<<"中序遍历：";
     bst.inOrder();
     std::cout<<std::endl;
