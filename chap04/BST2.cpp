@@ -216,6 +216,45 @@ public:
         return node;
     }
 
+    // 删除任意结点
+    void remove(T e){
+        root = remove(root,e);
+    }
+
+    // 从以node为根结点的二分搜索树中删除元素e，递归
+    // 返回删除结点后新的二分搜索树的根
+    Node<T>* remove(Node<T> *node, T e){
+        if(node == nullptr) return node;
+        if(node->e > e){
+            node->left = remove(node->left, e);
+            return node;
+        }else if(node->e <e){
+            node->right = remove(node->right,e);
+            return node;
+        }else{// e == node->e
+            // 待删除结点左子树为空时
+            if(node->left == nullptr){
+                Node<T> * rightNode = node->right;
+                delete node;
+                size--;
+                return rightNode;
+            }
+            // 待删除结点右子树为空时
+            if(node->right == nullptr){
+                Node<T> * leftNode = node->left;
+                delete node;
+                size--;
+                return leftNode;
+            }
+            // 待删除结点左右子树均不为空时
+            Node<T>* s = new Node<T>(min(node->right)->e);
+            s->right = removeMin(node->right);
+            s->left = node->left;
+            delete node;
+            return s;
+        }
+    }
+
 };
 
 int main(){
@@ -251,6 +290,13 @@ int main(){
     std::cout<<"删除最小结点:";
     bst.removeMin();
     bst.levelOrder();
+    
+    std::cout<<"删除结点20:";
+    bst.remove(20);
+    bst.levelOrder();
 
+    std::cout<<"删除结点32:";
+    bst.remove(32);
+    bst.levelOrder();
     return 0;
 }
