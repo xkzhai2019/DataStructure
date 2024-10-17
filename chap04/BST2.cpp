@@ -1,5 +1,6 @@
 #include <iostream>
 #include <stack>
+#include <queue>
 
 template<typename T>
 class Node{
@@ -126,10 +127,95 @@ public:
         std::cout<<node->e<<" ";
     }
 
+    // 层序遍历
     void levelOrder(){
-        
+        if(root==nullptr) return;
+
+        std::queue<Node<T> *>  *q = new std::queue<Node<T> *>();
+        q->push(root);
+        while(!q->empty()){
+            Node<T> *node = q->front(); 
+            q->pop();
+            std::cout<<node->e<<" ";
+            if(node->left!=nullptr){
+                q->push(node->left);
+            }
+            if(node->right!=nullptr){
+                q->push(node->right);
+            }
+        }
+        std::cout<<std::endl;
     }
     
+    // 找到二分搜索树的最小值
+    T min(){
+        if(root==nullptr){
+            throw "BST is empty";
+        }
+        return min(root)->e;
+    }
+    // 返回以node为根结点的二分搜索树的最小值所在结点
+    Node<T>* min(Node<T> *node){
+        if(node->left == nullptr){
+            return node;
+        }
+        return min(node->left);
+    }
+    // 删除最小值所在结点，返回最小值
+    T removeMin(){
+        T ret = min();
+        root = removeMin(root);
+        return ret;
+    }
+
+    // 删除以node为根的二分搜索树的最小结点
+    // 返回删除结点后新的二分搜索树的根
+    Node<T>* removeMin(Node<T> *node){
+        if(node->left == nullptr){
+            Node<T>* rightNode = node->right;
+            delete node;
+            size--;
+            return rightNode;
+        }
+        node->left = removeMin(node->left);
+        return node;
+    }
+
+
+    // 找到二分搜索树的最大值
+    T max(){
+        if(root==nullptr){
+            throw "BST is empty";
+        }
+        return max(root)->e;
+    }
+    // 返回以node为根结点的二分搜索树的最大值所在结点
+    Node<T>* max(Node<T> *node){
+        if(node->right == nullptr){
+            return node;
+        }
+        return max(node->right);
+    }
+    // 删除最大值所在结点，返回最大值
+    T removeMax(){
+        T ret = max();
+        root = removeMax(root);
+        return ret;
+    }
+
+    // 删除以node为根的二分搜索树的最大结点
+    // 返回删除结点后新的二分搜索树的根
+    Node<T>* removeMax(Node<T> *node){
+        if(node->right == nullptr){
+            Node<T>* leftNode = node->left;
+            delete node;
+            size--;
+            return leftNode;
+        }
+        node->right = removeMax(node->right);
+        return node;
+    }
+
 };
 
 int main(){
@@ -148,11 +234,23 @@ int main(){
     std::cout<<"前序遍历：";
     bst.preOrder();
     std::cout<<std::endl;
+    std::cout<<"前序遍历：";
     bst.preOrderNR();
     std::cout<<"中序遍历：";
     bst.inOrder();
     std::cout<<std::endl;
     std::cout<<"后序遍历：";
     bst.postOrder();
+    std::cout<<std::endl;
+    std::cout<<"层序遍历：";
+    bst.levelOrder();
+
+    std::cout<<"删除最大结点:";
+    bst.removeMax();
+    bst.levelOrder();
+    std::cout<<"删除最小结点:";
+    bst.removeMin();
+    bst.levelOrder();
+
     return 0;
 }
