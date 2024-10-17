@@ -91,7 +91,8 @@ public:
         std::stack<Node<T> *> stackTree;
         stackTree.push(root);
         while(!stackTree.empty()){
-            Node<T>* cur = stackTree.pop();
+            Node<T>* cur = stackTree.top();
+            stackTree.pop();
             std::cout<<cur->e<<" ";
             if(cur->right!=nullptr){
                 stackTree.push(cur->right);
@@ -123,6 +124,10 @@ public:
         postOrder(node->left);
         postOrder(node->right);
         std::cout<<node->e<<" ";
+    }
+
+    void levelOrder(){
+        
     }
     
 };
