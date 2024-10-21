@@ -1,8 +1,9 @@
+#ifndef BSTMAP_H
+#define BSTMAP_H
 #include <iostream>
-#include <vector>
+
 using namespace std;
 #include "Map.h"
-#include "FileOperation.h"
 
 template<typename K, typename V>
 class TreeNode{
@@ -171,23 +172,5 @@ public:
         }
     }
 };
-int main(){
-    cout << "pride-and-prejudice.txt" << endl;
-    string filename = "pride-and-prejudice.txt";
-    BSTMap<string, int> *bstMap = new BSTMap<string, int>();
-    vector<string> words;
-    if (FileOps::readFile(filename, words)) {
-        cout << "Total words: " << words.size() << endl;
-        for (string word : words) {
-            if (bstMap->contains(word)) {
-                bstMap->set(word, bstMap->get(word) + 1);
-            } else {
-                bstMap->add(word, 1);
-            }
-        }
-        cout << "Total different words: " << bstMap->getSize() << endl;
-        cout << "Frequency of PRIDE: " << bstMap->get("pride") << endl;
-        cout << "Frequency of PREJUDICE: " << bstMap->get("prejudice") << endl;
-    }
-    return 0;
-}
+
+#endif
