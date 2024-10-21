@@ -2,23 +2,21 @@
 
 template<typename T>
 class Node{
-//    private:
-    public:
-        T e;
-        Node<T> *next;
-    public:
-        Node(T e, Node<T> *next){
-            this->e = e;
-            this->next = next;
-        }
-        Node(T e){
-            this->e =e;
-            //next = NULL;
-            next = nullptr;
-        }
-        Node(){
-            next = nullptr;
-        }
+            public:
+                T e;
+                Node<T> *next;
+            public:
+                Node(T e, Node<T> *next){
+                    this->e = e;
+                    this->next = next;
+                }
+                Node(T e){
+                    this->e =e;
+                    next = nullptr;
+                 }
+                Node(){
+                    next = nullptr;
+                }
 };
 
 template<typename T>
