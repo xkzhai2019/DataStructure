@@ -138,4 +138,12 @@ class TArr{
         bool isEmpty(){ // 判断数组是否为空
             return length==0;
         }
+        void swap(int i, int j){
+            if(i<0 || j<0 || i>length-1 || j>length-1){
+                throw "超出范围，不可交换";
+            }
+            T tmp = data[i];
+            data[i] = data[j];
+            data[j] = tmp;
+        }
 };
