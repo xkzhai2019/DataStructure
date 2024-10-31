@@ -1,3 +1,5 @@
+#ifndef TARR_H
+#define TARR_H
 #include <iostream>
 using namespace std;
 
@@ -56,6 +58,14 @@ class TArr{
             data = new T[10];
             length = 0;
             size = 10;
+        }
+        TArr(T arr[], int n){
+            data = new T[n];
+            length = n;
+            for(int i=0;i<n;i++){
+                data[i] = arr[i];
+            }
+            size = n;
         }
         void addLast(T elem){
             if(length==size){// 数组已满
@@ -147,3 +157,4 @@ class TArr{
             data[j] = tmp;
         }
 };
+#endif
