@@ -15,12 +15,12 @@ double testSet(T *set, string filename){
         cout<< "Total different words: "<<set->getSize()<<endl;
     }
     clock_t endTime = clock();
-    return (endTime - startTime)/CLOCKS_PER_SEC;
+    return double(endTime - startTime)/CLOCKS_PER_SEC;
 }
 
 int main(){
-    cout<< "傲慢与偏见"<<endl;
-    string filename = "pride-and-prejudice.txt";
+    cout<< "双城记"<<endl;
+    string filename = "a-tale-of-two-cities.txt";
     BSTSet<string> *bstSet = new BSTSet<string>();
     double time1 = testSet(bstSet,filename);
     cout<<"BST Set: "<<time1<<" s "<<endl;
