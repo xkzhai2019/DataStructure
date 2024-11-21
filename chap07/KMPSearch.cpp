@@ -40,7 +40,8 @@ int Index_KMP(string S,string T){
 
 
 int main(){
-    int no = Index_KMP("ababcabcacbab","abcac");
+    //int no = Index_KMP("ababcabcacbab","abcac");
+    int no = Index_KMP("sadbutsad","sad");
     cout<<no<<endl;
     return 0;
 }
