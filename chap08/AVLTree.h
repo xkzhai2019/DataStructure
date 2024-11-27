@@ -2,8 +2,6 @@
 #include <vector>
 #include <algorithm>
 using namespace std;
-#include "FileOperation.h"
-#include "BSTMap.h"
 
 template<typename K,typename V>
 class AVLTree{
@@ -294,65 +292,3 @@ public:
         return retNode;
     }
 };
-int main(){
-    cout << "pride-and-prejudice.txt" << endl;
-    string filename = "pride-and-prejudice.txt";
-    AVLTree<string, int> *avl = new AVLTree<string, int>();
-    vector<string> words;
-    if (FileOps::readFile(filename, words)) {
-        std::sort(words.begin(),words.end());
-        cout << "Total words: " << words.size() << endl;
-        clock_t startTime = clock();
-        for (string word : words) {
-            if (avl->contains(word)) {
-                avl->set(word, avl->get(word) + 1);
-            } else {
-                avl->add(word, 1);
-            }
-        }
-        for(string word: words){
-            avl->contains(word);
-        }
-        clock_t endTime = clock();
-        cout << "AVLTree: "<< double(endTime - startTime)/CLOCKS_PER_SEC << "s" <<endl;
-        cout << "Total different words: " << avl->getSize() << endl;
-        cout << "Frequency of PRIDE: " << avl->get("pride") << endl;
-        cout << "Frequency of PREJUDICE: " << avl->get("prejudice") << endl;
-        for(string word: words){
-            avl->remove(word);
-            /*
-            if(!avl->isBST() || !avl->isBalanced()){
-                cout << "remove ele has error" <<endl;
-            }
-            */
-            cout << "isBST: "<< avl->isBST() <<endl;
-            cout << "isBalanced: "<< avl->isBalanced() <<endl;
-        }
-    }
-    cout << "over!"<<endl;
-    /*
-    BSTMap<string, int> *bstMap = new BSTMap<string, int>();
-    vector<string> words2;
-    if (FileOps::readFile(filename, words2)) {
-        std::sort(words2.begin(),words2.end());
-        cout << "Total words: " << words2.size() << endl;
-        clock_t startTime = clock();
-        for (string word : words2) {
-            if (bstMap->contains(word)) {
-                bstMap->set(word, bstMap->get(word) + 1);
-            } else {
-                bstMap->add(word, 1);
-            }
-        }
-        for(string word: words2){
-            bstMap->contains(word);
-        }
-        clock_t endTime = clock();
-        cout << "BSTMap: "<< double(endTime - startTime)/CLOCKS_PER_SEC << "s" <<endl;
-        cout << "Total different words: " << bstMap->getSize() << endl;
-        cout << "Frequency of PRIDE: " << bstMap->get("pride") << endl;
-        cout << "Frequency of PREJUDICE: " << bstMap->get("prejudice") << endl;
-    }
-    */
-    return 0;
-}
