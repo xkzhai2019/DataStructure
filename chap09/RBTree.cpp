@@ -47,6 +47,16 @@ private:
         }else{
             node->value = value;
         }
+
+        if(isRed(node->right) && !isRed(node->left)){
+            node = leftRotate(node);
+        }
+        if(isRed(node->left) && isRed(node->left->left)){
+            node = rightRotate(node);
+        }
+        if(isRed(node->left) && isRed(node->right)){
+            flipColor(node);
+        }
         return node;
     }
 public:
@@ -77,8 +87,10 @@ public:
         return node->value;
     }
 
+
     void add(K key,V value){
         root = add(root,key,value);
+        root->color = BLACK;
     }
     void set(K key, V value){
         TreeNode *node = getNode(root,key);
@@ -95,6 +107,29 @@ public:
         }
         root = remove(root,key);
         return &(node->value);
+    }
+    TreeNode* leftRotate(TreeNode *node){
+        TreeNode* x = node->right;
+        node->right = x->left;
+        x->left = node;
+        x->color = node->color;
+        node->color = RED;
+        return x;
+    }
+    
+    void flipColor(TreeNode* node){
+        node->color = RED;
+        node->left->color = BLACK;
+        node->right->color = BLACK;
+    }
+
+    TreeNode* rightRotate(TreeNode* node){
+        TreeNode* x = node->left;
+        node->left = x->right;
+        x->right = node;
+        x->color = node->color;
+        node->color = RED;
+        return x;
     }
     
     // 返回以node为根结点的二分搜索树的最小键值所在结点
