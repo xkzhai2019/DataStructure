@@ -1,7 +1,4 @@
 #include <iostream>
-#include "AVLTree.h"
-#include "FileOperation.h"
-#include "BSTMap.h"
 using namespace std;
 
 #define RED 1
@@ -129,74 +126,3 @@ public:
     }
     
 };
-
-int main(){
-    cout << "pride-and-prejudice.txt" << endl;
-    string filename = "pride-and-prejudice.txt";
-    AVLTree<string, int> *avl = new AVLTree<string, int>();
-    vector<string> words;
-    if (FileOps::readFile(filename, words)) {
-        cout << "Total words: " << words.size() << endl;
-        clock_t startTime = clock();
-        for (string word : words) {
-            if (avl->contains(word)) {
-                avl->set(word, avl->get(word) + 1);
-            } else {
-                avl->add(word, 1);
-            }
-        }
-        for(string word: words){
-            avl->contains(word);
-        }
-        clock_t endTime = clock();
-        cout << "AVLTree: "<< double(endTime - startTime)/CLOCKS_PER_SEC << "s" <<endl;
-        cout << "Total different words: " << avl->getSize() << endl;
-        cout << "Frequency of PRIDE: " << avl->get("pride") << endl;
-        cout << "Frequency of PREJUDICE: " << avl->get("prejudice") << endl;
-    }
-    
-    BSTMap<string, int> *bstMap = new BSTMap<string, int>();
-    vector<string> words2;
-    if (FileOps::readFile(filename, words2)) {
-        cout << "Total words: " << words2.size() << endl;
-        clock_t startTime = clock();
-        for (string word : words2) {
-            if (bstMap->contains(word)) {
-                bstMap->set(word, bstMap->get(word) + 1);
-            } else {
-                bstMap->add(word, 1);
-            }
-        }
-        for(string word: words2){
-            bstMap->contains(word);
-        }
-        clock_t endTime = clock();
-        cout << "BSTMap: "<< double(endTime - startTime)/CLOCKS_PER_SEC << "s" <<endl;
-        cout << "Total different words: " << bstMap->getSize() << endl;
-        cout << "Frequency of PRIDE: " << bstMap->get("pride") << endl;
-        cout << "Frequency of PREJUDICE: " << bstMap->get("prejudice") << endl;
-    }
-    
-    RBTree<string, int> *rbTree = new RBTree<string, int>();
-    vector<string> words3;
-    if (FileOps::readFile(filename, words3)) {
-        cout << "Total words: " << words3.size() << endl;
-        clock_t startTime = clock();
-        for (string word : words3) {
-            if (rbTree->contains(word)) {
-                rbTree->set(word, rbTree->get(word) + 1);
-            } else {
-                rbTree->add(word, 1);
-            }
-        }
-        for(string word: words3){
-            rbTree->contains(word);
-        }
-        clock_t endTime = clock();
-        cout << "RBTree: "<< double(endTime - startTime)/CLOCKS_PER_SEC << "s" <<endl;
-        cout << "Total different words: " << rbTree->getSize() << endl;
-        cout << "Frequency of PRIDE: " << rbTree->get("pride") << endl;
-        cout << "Frequency of PREJUDICE: " << rbTree->get("prejudice") << endl;
-    }
-    return 0;
-}
