@@ -19,7 +19,7 @@ class Student{
 
         int hashCode(){// 帮助计算hash函数的值
             hash<int> hash_int;
-            hash<std::string> hash_string;
+            hash<string> hash_string;
             transform(firstName.begin(), firstName.end(), firstName.begin(), ::tolower);
             transform(lastName.begin(), lastName.end(), lastName.begin(), ::tolower);
             int B = 31;
@@ -31,41 +31,27 @@ class Student{
             return hash;    
         }
 
-        /*
-        bool isequals(const Student &another){ 
-        // 产生hash冲突时，还是需要判断两个对象
-        //     
+        bool isequals(Student *another){ 
+            bool flag  = (this->hashCode() == another->hashCode());
+            if(flag==false){
+                return flag;
+            }else{// 有可能产生hash冲突，所以还是需要判断两个对象内容是否一致
+                return this->grade == another->grade && 
+                       this->cls == another->cls &&
+                       this->firstName == another->firstName &&
+                       this->lastName == another->lastName;
+            }
         }
-        */
 };
 
 int main() {
-    std::hash<int> hash_int;
-    std::hash<double> hash_double;
-    std::hash<std::string> hash_string;
-    int a = 42;
-    std::cout << hash_int(a) << std::endl;
-
-    int b = -42;
-    std::cout << hash_int(b) << std::endl;
-
-    double c = 3.1415926;
-    std::cout << hash_double(c) << std::endl;
-
-    std::string d = "imooc";
-    std::cout << hash_string(d) << std::endl;
-
-//    std::cout << INT64_MAX + 1 << std::endl;
-
     
-    Student student(3, 2, "Bobo", "Liu");
-    std::cout << student.hashCode() << std::endl;
+    Student *student = new Student(3, 2, "Da", "Liu");
+    cout << student->hashCode() << endl;
 
-    Student student2(3, 2, "BObO", "LIU");
-    std::cout << student2.hashCode() << std::endl;
-
-//    std::cout << std::boolalpha << student.isequals(student2) << std::endl;
-
+    Student *student2 = new Student(3, 2, "DA", "LIU");
+    cout << student2->hashCode() << endl;
+    cout << student->isequals(student2) << endl;
 
     return 0;
 }
