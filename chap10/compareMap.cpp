@@ -34,15 +34,20 @@ double testMap(T *map, string filename){
 int main(){
     cout<< "傲慢与偏见"<<endl;
     string filename = "pride-and-prejudice.txt";
+    
     BSTMap<string,int> *bstMap = new BSTMap<string,int>();
     double time1 = testMap(bstMap,filename);
     cout<<"BST Map: "<<time1<<" s "<<endl;
+    
     AVLMap<string,int> *avlMap = new AVLMap<string,int>();
     double time2 = testMap(avlMap,filename);
     cout<<"AVL Map: "<<time2<<" s "<<endl;
     RBTree<string,int> *rbTree = new RBTree<string,int>();
     double time3 = testMap(rbTree,filename);
     cout<<"RBTree: "<<time3<<" s "<<endl;
+    
+    // 单独运行时，运行正常
+    // 加入HashTable后，执行报错，原因未知
     HashTable<string,int> *hashTable = new HashTable<string,int>(193);
     double time4 = testMap(hashTable,filename);
     cout<<"hashTable: "<<time4<<" s "<<endl;

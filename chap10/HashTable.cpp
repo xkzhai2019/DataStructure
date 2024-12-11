@@ -82,6 +82,7 @@ int main(){
     vector<string> words;
     HashTable<string,int> *hashTable = new HashTable<string,int>();
     if (FileOps::readFile("pride-and-prejudice.txt", words)) {
+	sort(words.begin(),words.end());
         std::cout << "Total words: " << words.size() << std::endl;
         clock_t startTime = clock();
         for (string word : words) {
@@ -95,22 +96,24 @@ int main(){
         for (string word : words) {
             hashTable->contains(word);
         }
-        
+   	/*     
         for (string word : words) {
             hashTable->remove(word);
         }
+	*/
         
-        clock_t endTime = clock();
-       // std::cout << "Total different words: " << hashTable->getSize() << std::endl;
-       // std::cout << "Frequency of PRIDE: " << (hashTable->get("pride")) << std::endl;
-       // std::cout << "Frequency of PREJUDICE: " << (hashTable->get("prejudice")) << std::endl;
-        cout<<"HashTable:"<< double(endTime - startTime) / CLOCKS_PER_SEC << "s"<<endl;
+       clock_t endTime = clock();
+       std::cout << "Total different words: " << hashTable->getSize() << std::endl;
+       std::cout << "Frequency of PRIDE: " << (hashTable->get("pride")) << std::endl;
+       std::cout << "Frequency of PREJUDICE: " << (hashTable->get("prejudice")) << std::endl;
+       cout<<"HashTable:"<< double(endTime - startTime) / CLOCKS_PER_SEC << "s"<<endl;
     }
 
-    /*
+    
     BSTMap<string, int> *bstMap = new BSTMap<string, int>();
     vector<string> words2;
     if (FileOps::readFile("pride-and-prejudice.txt", words2)) {
+	sort(words2.begin(),words2.end());
         cout << "Total words: " << words2.size() << endl;
         clock_t startTime = clock();
         for (string word : words2) {
@@ -123,20 +126,23 @@ int main(){
         for(string word: words2){
             bstMap->contains(word);
         }
+	/*
         for (string word : words2) {
             bstMap->remove(word);
         }
+	*/
         clock_t endTime = clock();
-        // cout << "Total different words: " << bstMap->getSize() << endl;
-        // cout << "Frequency of PRIDE: " << bstMap->get("pride") << endl;
-        // cout << "Frequency of PREJUDICE: " << bstMap->get("prejudice") << endl;
+        cout << "Total different words: " << bstMap->getSize() << endl;
+        cout << "Frequency of PRIDE: " << bstMap->get("pride") << endl;
+        cout << "Frequency of PREJUDICE: " << bstMap->get("prejudice") << endl;
         cout << "BSTMap: "<< double(endTime - startTime)/CLOCKS_PER_SEC << "s" <<endl;
     }
-    */
+    
 
     AVLTree<string, int> *avl = new AVLTree<string, int>();
     vector<string> words3;
     if (FileOps::readFile("pride-and-prejudice.txt", words3)) {
+	sort(words3.begin(),words3.end());
         cout << "Total words: " << words3.size() << endl;
         clock_t startTime = clock();
         for (string word : words3) {
@@ -155,14 +161,16 @@ int main(){
         }
         */
         clock_t endTime = clock();
-        // cout << "Total different words: " << avl->getSize() << endl;
-        // cout << "Frequency of PRIDE: " << avl->get("pride") << endl;
-        // cout << "Frequency of PREJUDICE: " << avl->get("prejudice") << endl;
+        cout << "Total different words: " << avl->getSize() << endl;
+        cout << "Frequency of PRIDE: " << avl->get("pride") << endl;
+        cout << "Frequency of PREJUDICE: " << avl->get("prejudice") << endl;
         cout << "AVLTree: "<< double(endTime - startTime)/CLOCKS_PER_SEC << "s" <<endl;
         
+	//  测试KeySet方法
+	/*
         for(string word: avl->keySet()){
             cout << word << " " <<endl;
-        }
+        }*/
         
     }
     return 0;
