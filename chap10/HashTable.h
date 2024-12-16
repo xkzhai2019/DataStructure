@@ -6,7 +6,7 @@ class HashTable {
 private:
     int M; // 取模的那个素数，表的长度
     int size; // 表中存储数据的个数
-    AVLTree<Key, Value> *hashTable[];
+    AVLTree<Key, Value> **hashTable;
 
     int hash(Key key) {
         return (hashCode(key) & 0x7fffffff) % M;
@@ -22,7 +22,7 @@ public:
     HashTable(int M) {
         this->M = M;
         size = 0;
-        *hashTable = new AVLTree<Key, Value>[M];
+        hashTable = new AVLTree<Key, Value>* [M];
         for (int i = 0; i < M; ++i) {
             hashTable[i] = new AVLTree<Key, Value>();
         }
@@ -31,7 +31,7 @@ public:
     HashTable() {
         this->M = 97;
         size = 0;
-        *hashTable = new AVLTree<Key, Value>[M];
+        hashTable = new AVLTree<Key, Value>* [M];
         for (int i = 0; i < M; ++i) {
             hashTable[i] = new AVLTree<Key, Value>();
         }
