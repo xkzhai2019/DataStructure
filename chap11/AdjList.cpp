@@ -16,12 +16,12 @@ class AdjList{
             inFile.open(filename);
             if(inFile){
                 inFile >> V;
-                *adj = new LinkedList<int>[V];
-                /*
+                adj = new LinkedList<int>*[V];
+                
                 for(int i=0;i<V;i++){
                     adj[i] = new LinkedList<int>();
                 }
-                */
+                
                 inFile >> E;
                 int a,b;
                 for(int i = 0; i < E; i++){
@@ -31,12 +31,12 @@ class AdjList{
                     if(a==b){
                         throw "self loop is detected";
                     }
-                    if((*adj[a])->contains(b)){
+                    if(adj[a]->contains(b)){
                         throw "parallel edges are detected";
                     }
 
-                    (*adj[a])->addFirst(b);
-                    (*adj[b])->addFirst(a);
+                    adj[a]->addFirst(b);
+                    adj[b]->addFirst(a);
                 }
                 inFile.close();
             }else{
@@ -46,12 +46,12 @@ class AdjList{
         bool hasEdge(int v,int w){
             validateVertex(v);
             validateVertex(w);
-            return (*adj[v])->contains(w);
+            return adj[v]->contains(w);
         }
 
         LinkedList<int>* adj_V(int v){
             validateVertex(v);
-            return *adj[v];
+            return adj[v];
         }
 
         int degree(int v){
@@ -73,7 +73,7 @@ class AdjList{
             cout<<"V="<<V<<",E="<<E<<endl;
             for(int i=0;i<V;i++){
                 cout<<i<<": ";
-                (*adj[i])->print();
+                adj[i]->print();
                 cout<<endl;
             }
         }
