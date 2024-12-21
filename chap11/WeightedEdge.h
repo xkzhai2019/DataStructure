@@ -10,16 +10,26 @@ class WeightedEdge{
             this->w = w;
             this->weight = weight;
         }
+        WeightedEdge(){
+            v = -1;
+            w = -1;
+            weight = 10000;
+        }
         int getV(){
             return v;
         }
         int getW(){
             return w;
         }
-        void print(){
-            cout<<"("<<v<<"-"<<w<<": "<<weight<<")"<<endl;
+        int getWeight(){
+            return weight;
         }
-        bool operator<(const WeightedEdge &another) {
+        void print(){
+            cout<<"("<<v<<"-"<<w<<": "<<weight<<") ";
+        }
+
+        //bool operator<(const WeightedEdge &another) {
+        bool operator>(const WeightedEdge &another) {
             if (this->weight < another.weight) {
                 return true;
             } else {
@@ -27,7 +37,8 @@ class WeightedEdge{
             }
         }
 
-        bool operator>(const WeightedEdge &another) {
+        //bool operator>(const WeightedEdge &another) {
+        bool operator<(const WeightedEdge &another) {
             if (this->weight > another.weight) {
                 return true;
             } else {
