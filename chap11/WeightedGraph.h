@@ -1,32 +1,33 @@
-#ifndef GRAPH_H
-#define GRAPH_H
+#ifndef WEIGTHTEDG_H
+#define WEIGTHTEDG_H
 #include <iostream>
 #include <vector>
 #include <fstream>
 #include <string>
-#include "AVLSet.h"
+#include "AVLMap.h"
 using namespace std;
 
-class Graph{
+class WeightedGraph{
     private:
         int V;
         int E;
-        AVLSet<int> **adj;
+        AVLMap<int,int> **adj;
     public:
-        Graph(string filename){
+        WeightedGraph(string filename){
             ifstream inFile;
             inFile.open(filename);
             if(inFile){
                 inFile >> V;
-                adj = new AVLSet<int>*[V];
+                adj = new AVLMap<int,int>*[V];
+                
                 for(int i=0;i<V;i++){
-                    adj[i] = new AVLSet<int>();
+                    adj[i] = new AVLMap<int,int>();
                 }
                 
                 inFile >> E;
-                int a,b;
+                int a,b,weight;
                 for(int i = 0; i < E; i++){
-                    inFile >> a >> b;
+                    inFile >> a >> b >> weight;
                     validateVertex(a);
                     validateVertex(b);
                     if(a==b){
@@ -36,21 +37,12 @@ class Graph{
                         throw "parallel edges are detected";
                     }
 
-                    adj[a]->add(b);
-                    adj[b]->add(a);
+                    adj[a]->add(b,weight);
+                    adj[b]->add(a,weight);
                 }
                 inFile.close();
             }else{
                 cout<<"no this file"<<endl;
-            }
-        }
-        // 有bug，同addEdge一样
-        Graph(){
-            V = 0;
-            E = 0;
-            adj = new AVLSet<int>*[10];
-            for(int i=0;i<10;i++){
-                adj[i] = new AVLSet<int>();
             }
         }
         bool hasEdge(int v,int w){
@@ -59,20 +51,10 @@ class Graph{
             return adj[v]->contains(w);
         }
 
-        void removeEdge(int v,int w){
-            validateVertex(v);
-            validateVertex(w);
-            if(adj[v]->contains(w)){
-                E--;
-                adj[v]->remove(w);
-                adj[w]->remove(v);
-            }
-        }
-
         vector<int> adj_V(int v){
             validateVertex(v);
-            AVLSet<int>* avlSet = adj[v];
-            return avlSet->allElement();
+            AVLMap<int,int>* avlMap = adj[v];
+            return avlMap->keySet();
         }
 
         int degree(int v){
@@ -83,6 +65,12 @@ class Graph{
         }
         int getE(){
             return E;
+        }
+        int getWeight(int v, int w){
+            if(hasEdge(v,w)){
+                return adj[v]->get(w);
+            }
+            throw "no edge";
         }
 
         void validateVertex(int v){

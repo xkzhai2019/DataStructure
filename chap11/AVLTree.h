@@ -153,9 +153,22 @@ public:
         }
         return true;
     }
+    void getAllKey(TreeNode* node, vector<K>* ret){
+        if(node==nullptr) return;
+        getAllKey(node->left,ret);
+        ret->push_back(node->key);
+        getAllKey(node->right,ret);
+    }
+
+    vector<K> keySet(){
+        vector<K> ret;
+        getAllKey(root,&ret);
+        return ret;
+    }
     bool isBalanced(){
         return isBalanced(root);
     }
+
     int getSize(){
         return size;
     }
@@ -184,22 +197,6 @@ public:
             node->value = value;
         }
     }
-    vector<K> keySet(){
-        vector<K> ret;
-        getAllKey(root,&ret);
-        return ret;
-    }
-    // 获取以node为根的AVL树中所有的key
-    // 放入vector向量中
-    void getAllKey(TreeNode* node,vector<K> *ret){
-        if(node==nullptr){
-            return;
-        }
-        getAllKey(node->left,ret);
-        ret->push_back(node->key);
-        getAllKey(node->right,ret);
-    }
-
     V* remove(K key){
         TreeNode *node = getNode(root,key);
         if(node==nullptr){
@@ -310,5 +307,4 @@ public:
         return retNode;
     }
 };
-
 #endif

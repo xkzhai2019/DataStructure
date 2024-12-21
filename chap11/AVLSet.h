@@ -1,3 +1,5 @@
+#ifndef AVLSET_H
+#define AVLSET_H
 #include "Set.h"
 #include "AVLTree.h"
 #include <vector>
@@ -35,4 +37,4 @@ public:
         }
     }
 };
-
+#endif
